@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+npm info @sap/cds-dk --json \
+    | jq -r '.versions | reverse | .[] | select(startswith("7."))'
+
+
+
+
