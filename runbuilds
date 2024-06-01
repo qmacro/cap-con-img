@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+./capversions \
+    | while read -r VERSION; do
+        ./buildver "$VERSION"
+    done

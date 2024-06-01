@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Emits the latest N versions
+
+set -eo pipefail
+declare VERSIONS="${1:-5}"
+
+#npm info @sap/cds-dk --json \
+cat data.json \
+    | jq --arg v "$VERSIONS" -r '.versions[$v | tonumber * -1:][]'
+
+
+
+
