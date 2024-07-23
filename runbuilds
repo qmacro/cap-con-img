@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-./capversions \
+./latestcapversions \
     | while read -r VERSION; do
         ./buildver "$VERSION"
     done

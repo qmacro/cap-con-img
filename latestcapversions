@@ -5,8 +5,8 @@
 set -eo pipefail
 declare VERSIONS="${1:-5}"
 
-#npm info @sap/cds-dk --json \
-cat data.json \
+#cat data.json \
+npm info @sap/cds-dk --json \
     | jq --arg v "$VERSIONS" -r '.versions[$v | tonumber * -1:][]'
 
 
