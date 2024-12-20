@@ -8,16 +8,26 @@ FROM mcr.microsoft.com/devcontainers/javascript-node:${VARIANT}
 # Install some generally useful tools
 RUN apt-get update \
     && apt-get -y install --no-install-recommends \
-    curl git sqlite3 entr source-highlight
+    curl git sqlite3 entr source-highlight rlwrap
 
-# vi mode everywhere and nicer prompt KTHXBAI
 RUN cat <<EOBASHRC >> /home/node/.bashrc
+# vi mode everywhere
 export EDITOR=vi
 set -o vi
 bind -x '"\C-l": clear'
+
+# vi-mode enhanced cds REPL and core Node.js REPL
+# (see https://nodejs.org/api/repl.html#environment-variable-options)
+alias cdsr="env NODE_NO_READLINE=1 rlwrap -a cds r"
+alias node="env NODE_NO_READLINE=1 rlwrap node"
 EOBASHRC
 
+# nicer prompt
 RUN echo 'export PS1=${PS1/\$ /\\\\n$ }' >> /home/node/.bashrc
+
+RUN cat <<EOINPUTRC >> /home/node/.inputrc
+set editing-mode vi
+EOINPUTRC
 
 # Ready!
 WORKDIR /home/node
